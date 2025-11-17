@@ -1,0 +1,35 @@
+Source: garage
+Section: net
+Priority: optional
+Maintainer: Jaime Crespo <jynus@wikimedia.org>
+Rules-Requires-Root: no
+Build-Depends:
+ debhelper-compat (= 13),
+ pkgconf,
+ rustc,
+ cargo,
+ libzstd-dev,
+ libsqlite3-dev,
+ libsodium-dev,
+ liblmdb-dev
+Standards-Version: 4.7.2
+Homepage: https://garagehq.deuxfleurs.fr/
+
+Package: garage
+Architecture: amd64
+Depends:
+ ${shlibs:Depends},
+ ${misc:Depends},
+ openssl,
+ libsqlite3-0,
+ libzstd1,
+ libsodium23,
+# liblmdb0 We compile without support for liblmdb
+Recommends:
+ sqlite3,
+ envoy
+Description: Open-source distributed object storage service for self hosting
+ Garage is a lightweight geo-distributed data store that implements the Amazon
+ S3 object storage protocol. It enables applications to store large blobs such
+ as pictures, video, images, documents, etc., in a redundant multi-node
+ setting. S3 is versatile enough to also be used to publish a static website.

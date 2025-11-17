@@ -1,0 +1,106 @@
+.TH Garage 1 "November 14 2025"
+.SH NAME
+garage \- S3-compatible object store for small self-hosted geo-distributed deployments
+.SH SYNOPSIS
+.B garage
+.RI [ options ] " <SUBCOMMAND>"
+.SH DESCRIPTION
+This manual page documents briefly the
+.B garage
+command.
+.PP
+\fBgarage\fP is a program that allows running a server or client of the garage service.
+.SH OPTIONS
+These programs follow the usual GNU command line syntax, with long
+options starting with two dashes ('\-').
+A summary of options is included below.
+.TP
+.B \-\-help
+Prints help information.
+.TP
+.B \-V, \-\-version
+Prints version information.
+.TP
+.B \-\-admin-token <admin\-token>
+Admin API authentication token, replaces admin.admin_token in config.toml when running the Garage daemon
+[env: GARAGE_ADMIN_TOKEN=]
+.TP
+.B \-\-admin\-token\-file <admin\-token\-file>
+Admin API authentication token file path, replaces admin.admin_token in config.toml and admin-token when
+running the Garage daemon [env: GARAGE_ADMIN_TOKEN_FILE=]
+.TP
+.B \-\-allow\-world\-readable\-secrets <allow-world-readable-secrets>
+Skip permission check on files containing secrets [env: GARAGE_ALLOW_WORLD_READABLE_SECRETS=]
+.TP
+.B \-c, \-\-config <config\-file>
+Path to configuration file [env: GARAGE_CONFIG_FILE=]  [default: /etc/garage.toml]
+.TP
+.B \-\-metrics\-token <metrics\-token>
+Metrics API authentication token, replaces admin.metrics_token in config.toml when running the Garage daemon
+[env: GARAGE_METRICS_TOKEN=]
+.TP
+.B \-\-metrics\-token\-file <metrics\-token\-file>
+Metrics API authentication token file path, replaces admin.metrics_token in config.toml and metrics-token
+when running the Garage daemon [env: GARAGE_METRICS_TOKEN_FILE=]
+.TP
+.B \-h, \-\-rpc-host <rpc\-host>
+Host to connect to for admin operations, in the format: <full-node-id>@<ip>:<port> [env: GARAGE_RPC_HOST=]
+.TP
+.B \-s, \-\-rpc\-secret <rpc\-secret>
+RPC secret network key, used to replace rpc_secret in config.toml when running the daemon or doing admin
+operations [env: GARAGE_RPC_SECRET=]
+.TP
+.B \-\-rpc\-secret\-file <rpc\-secret\-file>
+RPC secret network key, used to replace rpc_secret in config.toml and rpc-secret when running the daemon or
+doing admin operations [env: GARAGE_RPC_SECRET_FILE=]
+.SH SUBCOMANDS
+.TP
+.B admin\-token
+Operations on admin API tokens
+.TP
+.B block
+Low\-level node\-local debug operations on data blocks
+.TP
+.B bucket
+Operations on buckets
+.TP
+.B convert\-db
+Convert metadata db between database engine formats
+.TP
+.B help
+Prints this message or the help of the given subcommand(s)
+.TP
+.B json\-api
+Directly invoke the admin API using a JSON payload. The result is printed to `stdout` in JSON
+format
+.TP
+.B key
+Operations on S3 access keys
+.TP
+.B layout
+Operations on the assignment of node roles in the cluster layout
+.TP
+.B meta
+Operations on the metadata db
+.TP
+.B node
+Operations on individual Garage nodes
+.TP
+.B offline-repair
+Offline reparation of node data (these repairs must be run offline directly on the server
+node)
+.TP
+.B repair
+Start repair of node data on remote node
+.TP
+.B server
+Run Garage server
+.TP
+.B stats
+Gather node statistics
+.TP
+.B status
+Get network status
+.TP
+.B worker
+Manage background workers
