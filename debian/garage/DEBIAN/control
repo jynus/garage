@@ -1,0 +1,15 @@
+Package: garage
+Version: 2.1.0-1
+Architecture: amd64
+Maintainer: Jaime Crespo <jynus@wikimedia.org>
+Installed-Size: 18375
+Depends: libc6 (>= 2.34), libgcc-s1 (>= 4.2), libsodium23 (>= 0.7.0), libsqlite3-0 (>= 3.7.15), libzstd1 (>= 1.5.5), openssl
+Recommends: sqlite3, envoy
+Section: net
+Priority: optional
+Homepage: https://garagehq.deuxfleurs.fr/
+Description: Open-source distributed object storage service for self hosting
+ Garage is a lightweight geo-distributed data store that implements the Amazon
+ S3 object storage protocol. It enables applications to store large blobs such
+ as pictures, video, images, documents, etc., in a redundant multi-node
+ setting. S3 is versatile enough to also be used to publish a static website.

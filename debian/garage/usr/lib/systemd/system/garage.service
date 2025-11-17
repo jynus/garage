@@ -1,0 +1,17 @@
+[Unit]
+Description=Garage Data Store
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Environment='RUST_LOG=garage=info' 'RUST_BACKTRACE=1'
+ExecStart=/usr/bin/garage server
+User=garage
+Group=garage
+ProtectHome=true
+NoNewPrivileges=true
+LimitNOFILE=300000000
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target

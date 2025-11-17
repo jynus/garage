@@ -1,0 +1,5 @@
+991be54593cddc72581ebd0f9e9aa90a  usr/bin/garage
+136d513d0388422b7f21dbee67faf3b2  usr/lib/systemd/system/garage.service
+9b142abbeb0a2314f8e8687c1ef7a024  usr/share/doc/garage/changelog.Debian.gz
+045f5ea171a032e4896d645f9627aa5d  usr/share/doc/garage/copyright
+ba31016cdc75387f0b5b75b136c8835f  usr/share/man/man1/garage.1.gz

@@ -1,0 +1,81 @@
+#!/bin/sh
+
+set -e
+
+add_garagegroup() {
+	getent group "$GARAGE_GROUP" >/dev/null ||
+		if which groupadd >/dev/null; then
+			groupadd -f -r "$GARAGE_GROUP"
+		else
+			addgroup -S "$GARAGE_GROUP"
+		fi
+}
+
+add_garageuser() {
+	getent passwd "$GARAGE_USER" >/dev/null ||
+		if which groupadd >/dev/null; then
+			useradd -r -g "$GARAGE_GROUP" -s '/sbin/nologin' -c 'Garage User' "$GARAGE_USER"
+		else
+			adduser -S -G "$GARAGE_GROUP" -s '/sbin/nologin' "$GARAGE_USER"
+		fi
+}
+
+add_config_file() {
+	if [ ! -d "$META_DIR" ]; then
+		mkdir -p "$META_DIR"
+		chown $GARAGE_USER:$GARAGE_GROUP "$META_DIR"
+		chmod 0600 "$META_DIR"
+	fi
+    if [ ! -d "$DATA_DIR" ]; then
+		mkdir -p "$DATA_DIR"
+		chown $GARAGE_USER:$GARAGE_GROUP "$DATA_DIR"
+		chmod 0600 "$DATA_DIR"
+    fi
+    if [ ! -f "$CONFIG_FILE" ]; then
+        cat >"$CONFIG_FILE" <<EOF
+metadata_dir = "$META_DIR"
+data_dir = "$DATA_DIR"
+db_engine = "sqlite"
+
+replication_factor = 1
+
+rpc_bind_addr = "[::]:3901"
+rpc_public_addr = "127.0.0.1:3901"
+rpc_secret = "$(openssl rand -hex 32)"
+
+[s3_api]
+s3_region = "garage"
+api_bind_addr = "[::]:3900"
+root_domain = ".s3.garage.localhost"
+
+[s3_web]
+bind_addr = "[::]:3902"
+root_domain = ".web.garage.localhost"
+index = "index.html"
+
+# kv2 is disabled by default
+# [k2v_api]
+# api_bind_addr = "[::]:3904"
+
+[admin]
+api_bind_addr = "[::]:3903"
+admin_token = "$(openssl rand -base64 32)"
+metrics_token = "$(openssl rand -base64 32)"
+EOF
+
+		chown $GARAGE_USER:$GARAGE_GROUP "$CONFIG_FILE"
+		chmod 0600 "$CONFIG_FILE"
+	fi
+}
+
+GARAGE_USER='garage'
+GARAGE_GROUP='garage'
+META_DIR='/srv/garage/meta'
+DATA_DIR='/srv/garage/data'
+CONFIG_FILE='/etc/garage.toml'
+
+add_garagegroup
+add_garageuser
+add_config_file
+
+#DEBHELPER#
